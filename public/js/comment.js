@@ -1,57 +1,32 @@
+const commentFormHandler = async (event) => {
+  event.preventDefault();
 
- 
-const editButtonHandler = async (event) => {
-  event.preventDefault()
- 
-    const id = event.target.getAttribute('data-id');
-    const name = document.getElementById("name-edit").value
-    const description = document.getElementById("description-edit").value
-    const needed_funding=document.getElementById("needed_funding-edit").textContent
- 
-    console.log(id)
-    if (name && description && needed_funding && id ) {
-      const response = await fetch(`/api/projects/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ name, description, needed_funding }),
+  const content = document.querySelector('#comment-content').value.trim();
+  const project_id = window.location.pathname.split('/').pop();
+
+  if (content) {
+    try {
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        body: JSON.stringify({ content, project_id }),
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
       if (response.ok) {
-        document.location.replace('/view-posts');
+        document.location.reload();
       } else {
-        alert('Failed to delete project');
+        const data = await response.json();
+        alert('Failed to create comment: ' + (data.message || 'Unknown error'));
       }
-
-    }
- 
-};
-
-const delButtonHandler = async (event) => {
- 
-  if (event.target.hasAttribute('data-id')) {
-    const id = event.target.getAttribute('data-id');
-
-    const response = await fetch(`/api/projects/${id}`, {
-      method: 'DELETE',
-    });
-
-    if (response.ok) {
-      document.location.replace('/view-posts');
-    } else {
-      alert('Failed to delete project');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to create comment');
     }
   }
 };
 
- 
-
 document
-  .querySelector('.delete-btn')
-  .addEventListener('click', delButtonHandler);
-
-
-document
-  .querySelector('.edit-form')
-  .addEventListener('submit', editButtonHandler);
+  .querySelector('.comment-form')
+  .addEventListener('submit', commentFormHandler); 
