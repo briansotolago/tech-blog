@@ -8,7 +8,7 @@ if (process.env.DB_URL) {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false // Helps prevent SSL certificate validation issues
+        rejectUnauthorized: false 
       }
     }
   });
