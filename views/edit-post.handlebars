@@ -1,0 +1,25 @@
+<div class="blog-container">
+  <div class="blog-post">
+    <div class="post-title">
+      Edit Post
+    </div>
+    <div class="post-content">
+      <form class="edit-post-form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" class="form-input" value="{{title}}" />
+        </div>
+        <div class="form-group">
+          <label for="content">Content</label>
+          <textarea id="content" class="form-input" rows="4">{{content}}</textarea>
+        </div>
+        <div class="form-group button-group">
+          <button type="submit" class="login-btn update-btn">Update</button>
+          <button type="button" class="login-btn delete-btn">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/js/edit-post.js"></script> 

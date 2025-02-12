@@ -1,24 +1,24 @@
-<!-- Loop over each object in the projects array -->
-{{#each projects as |project| }}
-<div class="row mb-4 project">
-  <div class="col-md-5">
-    <h2>
-      <!-- Call helper function with triple brackets to render the emoji span as HTML -->
-      {{{get_emoji}}}
-      <a href="/comment/{{project.id}}">{{project.name}}</a>
-    </h2>
-    <p>
-      <span for="img" aria-label="money">💲</span>
-      <!-- Pass needed_funding value to the helper function -->
-      <span class="dollar-amount">{{format_amount project.needed_funding}}</span>
-      needed!
-    </p>
-    <p>Created by {{project.user.name}} on {{format_date project.date_created}}</p>
-  </div>
-  <div class="col-md-7">
-    <p>
-      {{project.description}}
-    </p>
-  </div>
+<div class="blog-container">
+  {{#if projects.length}}
+    {{#each projects}}
+    <div class="blog-post">
+      <div class="post-title">
+        <a href="/project/{{id}}">{{title}}</a>
+        <span class="post-meta">Posted by {{user.username}} on {{format_date createdAt}}</span>
+      </div>
+      <div class="post-content">
+        {{content}}
+      </div>
+    </div>
+    {{/each}}
+  {{else}}
+    <div class="blog-post">
+      <div class="post-title">
+        Welcome to Tech-Blog
+      </div>
+      <div class="post-content">
+        There are no posts created yet. {{#unless logged_in}}<a href="/login">Login</a>{{/unless}} to create a post!
+      </div>
+    </div>
+  {{/if}}
 </div>
-{{/each}}

@@ -1,25 +1,53 @@
- 
-  <form class="form w-50 edit-form"  data-id="{{id}}">
-    <div class="form-group">
-      <label for="project-name">Title:</label>
-      <input id="name-edit" class="form-input" value="{{name}}" />
+<div class="blog-container">
+  <div class="blog-post">
+    <div class="post-title">
+      {{title}}
+      <span class="post-meta">Post created by {{user.username}} on {{format_date createdAt}}</span>
     </div>
-    <div class="form-group">
-       <label for="project-name">Content:</label>
-      <textarea id="description-edit" class="form-input">{{description}}</textarea>
+    <div class="post-content">
+      {{content}}
     </div>
-    <p>Created by {{user.name}} on {{format_date date_created}}</p>
-    <p>
-      <span for="img" aria-label="money">💲</span>
-      <span class="dollar-amount" id="needed_funding-edit" >{{ needed_funding}}</span>
-      needed
-    </p>
-    <p>
-      <button type="submit" class="btn btn-primary">update post</button>
- 
-     
-    </p>
-  </form>
+  </div>
 
-   <button data-id="{{id}}" class="btn btn-primary delete-btn">delete post</button>
- <script src="/js/editPost.js"></script>
+  {{#if logged_in}}
+  <div class="comment-form-container">
+    <h3>Leave a Comment</h3>
+    <form class="comment-form">
+      <div class="form-group">
+        <textarea id="comment-content" class="form-input" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="login-btn">Submit</button>
+      </div>
+    </form>
+  </div>
+  {{/if}}
+
+  <div class="comments-container">
+    <h3>Comments</h3>
+    {{#if comments.length}}
+      {{#each comments}}
+      <div class="comment">
+        <div class="comment-meta">
+          {{user.username}} on {{format_date createdAt}}
+        </div>
+        <div class="comment-content">
+          {{content}}
+        </div>
+      </div>
+      {{/each}}
+    {{else}}
+      <p>There are no comments yet.</p>
+    {{/if}}
+
+    {{#unless logged_in}}
+    <div class="login-prompt">
+      <p><a href="/login">Login</a> to leave a comment.</p>
+    </div>
+    {{/unless}}
+  </div>
+</div>
+
+{{#if logged_in}}
+<script src="/js/comment.js"></script>
+{{/if}}
